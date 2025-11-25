@@ -5,6 +5,7 @@ public class bulletController : MonoBehaviour
     public GameObject colisionCheck;
     public LayerMask hurtfullStuff;
     private bool hitEnemy;
+    private float time;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,12 +16,22 @@ public class bulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector2.right * Time.deltaTime * 5);
+        transform.Translate(Vector2.right * Time.deltaTime * 7.5f);
         hitEnemy = Physics2D.OverlapCircle(colisionCheck.transform.position, .5f, hurtfullStuff);
+        time += Time.deltaTime;
     }
     void FixedUpdate()
     {
-        if (hitEnemy)
+        while (hitEnemy)
+        {
+            float timeA;
+            timeA = Time.deltaTime;
+            if (timeA >= 0.1f)
+            {
+                JustKillItAll();
+            }
+        }
+        if (time >= 5)
         {
             JustKillItAll();
         }

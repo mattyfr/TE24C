@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask hurtfullStuff;
     public GameObject groundChecker;
     public GameObject Hitbox;
-    private float shootCooldown;
     public GameObject shootPrefab;
+    private float shootCooldown;
     private bool jumpPressed;
     private bool shootPressed;
     private bool isGrounded;
@@ -62,9 +62,4 @@ public class PlayerController : MonoBehaviour
             shootPressed = false;
         }
     }
-    void JustKillItAll()
-    {
-        Destroy(gameObject);
-    }
-
 }

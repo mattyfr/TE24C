@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 
@@ -29,7 +30,7 @@ public class EnemyController : MonoBehaviour
         }
         Vector2 movement = Vector2.right * a;
         transform.Translate(movement * Time.deltaTime);
-        hasBeenHit = Physics2D.OverlapCircle(colisionCheck.transform.position, 1f, hurtfullStuff);
+        hasBeenHit = Physics2D.OverlapCircle(colisionCheck.transform.position, 0.5f, hurtfullStuff);
     }
     void FixedUpdate()
     {
