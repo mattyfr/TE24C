@@ -10,12 +10,14 @@ public class PlayerController : MonoBehaviour
     public LayerMask hurtfullStuff;
     public GameObject groundChecker;
     public GameObject Hitbox;
-    public GameObject shootPrefab;
+    public GameObject shootPrefabRight;
+    public GameObject shootPrefabLeft;
     private float shootCooldown;
     private bool jumpPressed;
     private bool shootPressed;
     private bool isGrounded;
     private bool playerGotHit;
+    private bool left; 
     void Start()
     {
         shootCooldown = 0;
@@ -40,7 +42,17 @@ public class PlayerController : MonoBehaviour
         {
             shootCooldown -= Time.deltaTime;
         }
-        
+        if (Input.GetButtonDown("Horizontal"))
+        {
+            if (Input.GetAxisRaw("Horizontal") <= 0)
+            {
+                left = true;
+            }
+            else
+            {
+                left = false;
+            }
+        }
     }
     void FixedUpdate()
     {
@@ -58,7 +70,14 @@ public class PlayerController : MonoBehaviour
         }
         if (shootPressed)
         {
-            Instantiate(shootPrefab, transform.position, Quaternion.identity);
+            if (left)
+            {
+                Instantiate(shootPrefabLeft, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(shootPrefabRight, transform.position, Quaternion.identity);
+            }
             shootPressed = false;
         }
     }
