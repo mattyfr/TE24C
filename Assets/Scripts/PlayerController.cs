@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 1f;
     public LayerMask groundLayer;
     public LayerMask hurtfullStuff;
+    public LayerMask checkPointLayer;
     public GameObject groundChecker;
     public GameObject Hitbox;
     public GameObject shootPrefabRight;
@@ -18,9 +19,11 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool playerGotHit;
     private bool left; 
+    private Vector3 lastCheckPointPos;
     void Start()
     {
         shootCooldown = 0;
+        lastCheckPointPos = new Vector2(0,0);
     }
     void Update()
     {
@@ -58,6 +61,10 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundChecker.transform.position, .5f, groundLayer);
         playerGotHit = Physics2D.OverlapCircle(Hitbox.transform.position, .5f, hurtfullStuff);
+        if (Physics2D.OverlapCircle(Hitbox.transform.position, .5f, checkPointLayer))
+        {
+            lastCheckPointPos = transform.position;
+        }
         if (jumpPressed)
         {
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -66,7 +73,7 @@ public class PlayerController : MonoBehaviour
         }
         if (playerGotHit)
         {
-            transform.position = new Vector2(0f, 0f);
+            transform.position = lastCheckPointPos;
         }
         if (shootPressed)
         {
